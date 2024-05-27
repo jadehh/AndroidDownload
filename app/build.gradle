@@ -1,0 +1,70 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    namespace 'com.jadehh.androiddownload'
+    compileSdk 34
+    flavorDimensions = ["api", "abi"]
+
+    defaultConfig {
+        applicationId "com.jadehh.androiddownload"
+        minSdk 21
+        targetSdk 32
+        versionCode 100
+        versionName "1.0.0"
+    }
+
+
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+
+    productFlavors {
+        androiddownload {
+            dimension "api"
+        }
+        x86 {
+            dimension "abi"
+            ndk { abiFilters "x86" }
+        }
+        arm64_v8a {
+            dimension "abi"
+            ndk { abiFilters "arm64-v8a" }
+        }
+        armeabi_v7a {
+            dimension "abi"
+            ndk { abiFilters "armeabi-v7a" }
+        }
+    }
+
+    buildFeatures {
+        viewBinding true
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.debug
+        }
+    }
+
+    android.applicationVariants.configureEach { variant ->
+        variant.outputs.configureEach { output ->
+            outputFileName = "${variant.productFlavors[0].name}-${variant.productFlavors[1].name}.apk"
+        }
+    }
+}
+
+dependencies {
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.github.chenBingX:SuperTextView:v3.0.0'
+    implementation 'com.google.android.material:material:1.12.0'
+    implementation 'com.github.bassaer:materialdesigncolors:1.0.0'
+
+
+}
