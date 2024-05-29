@@ -24,5 +24,6 @@ dependencyResolutionManagement {
     }
 }
 include ':app'
-rootProject.name = "AndroidDownload"
 include ':thunder'
+rootProject.name = "AndroidDownload"
+
