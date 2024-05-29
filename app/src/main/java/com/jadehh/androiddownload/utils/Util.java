@@ -7,7 +7,7 @@ import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.widget.Toast;
-import com.jadehh.androiddownload.ui.common.Const;
+import com.jadehh.androiddownload.common.Const;
 import org.xutils.x;
 import es.dmoral.toasty.Toasty;
 

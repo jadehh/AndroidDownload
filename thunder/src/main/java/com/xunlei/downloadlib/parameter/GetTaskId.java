@@ -26,6 +26,13 @@ public class GetTaskId {
         this.mRealUrl = url;
     }
 
+    public GetTaskId(long mTaskId,File mSavePath,String mFileName,String mRealUrl){
+       this.mTaskId = mTaskId;
+       this.mSavePath = mSavePath;
+       this.mFileName = mFileName;
+       this.mRealUrl = mRealUrl;
+    }
+
     public GetTaskId(File savePath, String fileName, String realUrl) {
         this.mSavePath = savePath;
         this.mFileName = fileName;

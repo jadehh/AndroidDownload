@@ -8,7 +8,7 @@ import android.os.Environment;
 import android.text.TextUtils;
 
 import com.jadehh.androiddownload.R;
-import com.jadehh.androiddownload.ui.common.Const;
+import com.jadehh.androiddownload.common.Const;
 
 import java.io.Closeable;
 import java.io.File;

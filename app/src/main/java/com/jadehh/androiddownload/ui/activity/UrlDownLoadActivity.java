@@ -7,9 +7,10 @@ import android.widget.EditText;
 
 import com.jadehh.androiddownload.R;
 import com.jadehh.androiddownload.mvp.p.UrlDownLoadPresenter;
+import com.jadehh.androiddownload.mvp.p.UrlDownLoadPresenterImp;
 import com.jadehh.androiddownload.mvp.v.UrlDownLoadView;
 import com.jadehh.androiddownload.ui.base.BaseActivity;
-import com.jadehh.androiddownload.ui.common.Const;
+import com.jadehh.androiddownload.common.Const;
 import com.jadehh.androiddownload.utils.Util;
 
 import org.xutils.view.annotation.ContentView;
@@ -27,12 +28,12 @@ public class UrlDownLoadActivity extends BaseActivity implements UrlDownLoadView
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         super.setTopBarTitle(R.string.new_download);
-        XLTaskHelper.init(getApplicationContext());
         urlDownLoadPresenter = new UrlDownLoadPresenterImp(this);
     }
 
     @Event(value = R.id.start_download)
     private void startDownloadClick(View view) {
+        String url =  urlInput.getText().toString().trim();
         urlDownLoadPresenter.startTask(urlInput.getText().toString().trim());
     }
 

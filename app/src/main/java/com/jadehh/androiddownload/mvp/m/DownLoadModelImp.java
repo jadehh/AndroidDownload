@@ -1,15 +1,19 @@
 package com.jadehh.androiddownload.mvp.m;
 
 import com.jadehh.androiddownload.mvp.e.DownloadTaskEntity;
-import com.jadehh.androiddownload.ui.common.Const;
+import com.jadehh.androiddownload.mvp.e.TorrentInfoEntity;
+import com.jadehh.androiddownload.common.Const;
+import com.jadehh.androiddownload.utils.AppSettingUtil;
 import com.jadehh.androiddownload.utils.DBTools;
+import com.jadehh.androiddownload.utils.FileTools;
+import com.orhanobut.logger.Logger;
 import com.xunlei.downloadlib.XLTaskHelper;
+import com.xunlei.downloadlib.parameter.GetTaskId;
 import com.xunlei.downloadlib.parameter.TorrentFileInfo;
 import com.xunlei.downloadlib.parameter.TorrentInfo;
 import com.xunlei.downloadlib.parameter.XLTaskInfo;
 
 import org.xutils.ex.DbException;
-import org.xutils.x;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -49,12 +53,13 @@ public class DownLoadModelImp implements DownLoadModel {
         task.setUrl(url);
         task.setLocalPath(AppSettingUtil.getInstance().getFileSavePath());
         try {
-            long taskId = XLTaskHelper.instance(x.app().getApplicationContext()).addThunderTask(url,AppSettingUtil.getInstance().getFileSavePath(),null);
-            XLTaskInfo taskInfo = XLTaskHelper.instance(x.app().getApplicationContext()).getTaskInfo(taskId);
-            task.setmFileName(XLTaskHelper.instance(x.app().getApplicationContext()).getFileName(url));
+            XLTaskHelper xlTaskHelper = new XLTaskHelper();
+            GetTaskId getTaskId = xlTaskHelper.addThunderTask(url, new File(AppSettingUtil.getInstance().getFileSavePath()));
+            XLTaskInfo taskInfo = xlTaskHelper.getTaskInfo(getTaskId);
+            task.setmFileName(getTaskId.getFileName());
             task.setmFileSize(taskInfo.mFileSize);
             task.setmTaskStatus(taskInfo.mTaskStatus);
-            task.setTaskId(taskId);
+            task.setTaskId(getTaskId.mTaskId);
             task.setmDCDNSpeed(taskInfo.mAdditionalResDCDNSpeed);
             task.setmDownloadSize(taskInfo.mDownloadSize);
             task.setmDownloadSpeed(taskInfo.mDownloadSpeed);
@@ -70,69 +75,70 @@ public class DownLoadModelImp implements DownLoadModel {
 
     @Override
     public Boolean startTorrentTask(String btpath, int[] indexs) {
-        DownloadTaskEntity task=new DownloadTaskEntity();
-        TorrentInfo torrentInfo= XLTaskHelper.instance(x.app().getApplicationContext()).getTorrentInfo(btpath);
-        if(indexs==null || indexs.length<=0) {
-            int i = 0;
-            indexs = new int[torrentInfo.mSubFileInfo.length];
-            for (TorrentFileInfo torrent : torrentInfo.mSubFileInfo) {
-                indexs[i++] = torrent.mFileIndex;
-            }
-        }
-        String savePath= AppSettingUtil.getInstance().getFileSavePath();
-        if(torrentInfo.mIsMultiFiles) {
-            savePath += File.separator + torrentInfo.mMultiFileBaseFolder;
-            task.setmFileName(torrentInfo.mMultiFileBaseFolder);
-        }else{
-            if(torrentInfo.mSubFileInfo.length>1) {
-                savePath += File.separator + FileTools.getFileNameWithoutSuffix(btpath);
-                task.setmFileName(FileTools.getFileNameWithoutSuffix(btpath));
-            }else{
-                task.setmFileName(torrentInfo.mSubFileInfo[0].mFileName);
-            }
-        }
-        long taskId= 0;
-        try {
-            taskId = XLTaskHelper.instance(x.app().getApplicationContext()).addTorrentTask(btpath, savePath,indexs);
-            XLTaskInfo taskInfo = XLTaskHelper.instance(x.app().getApplicationContext()).getTaskInfo(taskId);
-            task.setLocalPath(savePath);
-            task.setFile(!torrentInfo.mIsMultiFiles);
-            task.setHash(torrentInfo.mInfoHash);
-            task.setUrl(btpath);
-            task.setmFileSize(taskInfo.mFileSize);
-            task.setmTaskStatus(taskInfo.mTaskStatus);
-            task.setTaskId(taskId);
-            task.setmDCDNSpeed(taskInfo.mAdditionalResDCDNSpeed);
-            task.setmDownloadSize(taskInfo.mDownloadSize);
-            task.setmDownloadSpeed(taskInfo.mDownloadSpeed);
-            task.setTaskType(Const.BT_DOWNLOAD);
-            task.setCreateDate(new Date());
-            DBTools.getInstance().db().saveBindingId(task);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
+//        DownloadTaskEntity task=new DownloadTaskEntity();
+//        TorrentInfo torrentInfo= XLTaskHelper.instance(x.app().getApplicationContext()).getTorrentInfo(btpath);
+//        if(indexs==null || indexs.length<=0) {
+//            int i = 0;
+//            indexs = new int[torrentInfo.mSubFileInfo.length];
+//            for (TorrentFileInfo torrent : torrentInfo.mSubFileInfo) {
+//                indexs[i++] = torrent.mFileIndex;
+//            }
+//        }
+//        String savePath= AppSettingUtil.getInstance().getFileSavePath();
+//        if(torrentInfo.mIsMultiFiles) {
+//            savePath += File.separator + torrentInfo.mMultiFileBaseFolder;
+//            task.setmFileName(torrentInfo.mMultiFileBaseFolder);
+//        }else{
+//            if(torrentInfo.mSubFileInfo.length>1) {
+//                savePath += File.separator + FileTools.getFileNameWithoutSuffix(btpath);
+//                task.setmFileName(FileTools.getFileNameWithoutSuffix(btpath));
+//            }else{
+//                task.setmFileName(torrentInfo.mSubFileInfo[0].mFileName);
+//            }
+//        }
+//        long taskId= 0;
+//        try {
+//            taskId = XLTaskHelper.instance(x.app().getApplicationContext()).addTorrentTask(btpath, savePath,indexs);
+//            XLTaskInfo taskInfo = XLTaskHelper.instance(x.app().getApplicationContext()).getTaskInfo(taskId);
+//            task.setLocalPath(savePath);
+//            task.setFile(!torrentInfo.mIsMultiFiles);
+//            task.setHash(torrentInfo.mInfoHash);
+//            task.setUrl(btpath);
+//            task.setmFileSize(taskInfo.mFileSize);
+//            task.setmTaskStatus(taskInfo.mTaskStatus);
+//            task.setTaskId(taskId);
+//            task.setmDCDNSpeed(taskInfo.mAdditionalResDCDNSpeed);
+//            task.setmDownloadSize(taskInfo.mDownloadSize);
+//            task.setmDownloadSpeed(taskInfo.mDownloadSpeed);
+//            task.setTaskType(Const.BT_DOWNLOAD);
+//            task.setCreateDate(new Date());
+//            DBTools.getInstance().db().saveBindingId(task);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return false;
+//        }
         return true;
     }
 
     @Override
     public Boolean startTask(DownloadTaskEntity task) {
         try {
-            long taskId=0;
+            GetTaskId taskId = new GetTaskId(task.getTaskId(),new File(task.getLocalPath()),task.getmFileName(),task.getUrl());
             if(task.getTaskType()==Const.BT_DOWNLOAD){
-                TorrentInfo torrentInfo= XLTaskHelper.instance(x.app().getApplicationContext()).getTorrentInfo(task.getUrl());
+                Logger.t(task.getLocalPath());
+                TorrentInfo torrentInfo= XLTaskHelper.get().getTorrentInfo(new File(task.getLocalPath()));
                 int i=0;
                 int[] indexs=new int[torrentInfo.mSubFileInfo.length];
                 for(TorrentFileInfo torrent:torrentInfo.mSubFileInfo) {
                     indexs[i++]=torrent.mFileIndex;
                 }
-                taskId = XLTaskHelper.instance(x.app().getApplicationContext()).addTorrentTask(task.getUrl(), task.getLocalPath(),indexs);
+                taskId = XLTaskHelper.get().addThunderTask(task.getUrl(),new File(task.getLocalPath()));
             }else if(task.getTaskType()==Const.URL_DOWNLOAD){
-                taskId = XLTaskHelper.instance(x.app().getApplicationContext()).addThunderTask(task.getUrl(), task.getLocalPath(), null);
+                taskId = XLTaskHelper.get().addThunderTask(task.getUrl(),new File(task.getLocalPath()));
             }
-            XLTaskInfo taskInfo = XLTaskHelper.instance(x.app().getApplicationContext()).getTaskInfo(taskId);
+            XLTaskInfo taskInfo  = XLTaskHelper.get().getTaskInfo(taskId);
             task.setmFileSize(taskInfo.mFileSize);
-            task.setTaskId(taskId);
+            task.setTaskId(taskInfo.mTaskId);
             task.setmTaskStatus(taskInfo.mTaskStatus);
             DBTools.getInstance().db().saveOrUpdate(task);
             if(taskInfo.mTaskId==0)
@@ -146,16 +152,16 @@ public class DownLoadModelImp implements DownLoadModel {
 
     @Override
     public Boolean stopTask(DownloadTaskEntity task) {
-        try {
-            XLTaskHelper.instance(x.app().getApplicationContext()).stopTask(task.getTaskId());
-            task.setmTaskStatus(Const.DOWNLOAD_STOP);
-            task.setmDownloadSpeed(0);
-            task.setmDCDNSpeed(0);
-            DBTools.getInstance().db().saveOrUpdate(task);
-        } catch (DbException e) {
-            e.printStackTrace();
-            return false;
-        }
+//        try {
+//            XLTaskHelper.instance(x.app().getApplicationContext()).stopTask(task.getTaskId());
+//            task.setmTaskStatus(Const.DOWNLOAD_STOP);
+//            task.setmDownloadSpeed(0);
+//            task.setmDCDNSpeed(0);
+//            DBTools.getInstance().db().saveOrUpdate(task);
+//        } catch (DbException e) {
+//            e.printStackTrace();
+//            return false;
+//        }
         return true;
     }
 
@@ -180,7 +186,7 @@ public class DownLoadModelImp implements DownLoadModel {
     @Override
     public Boolean deleTask(DownloadTaskEntity task, Boolean stopTask, Boolean deleFile) {
         if(stopTask){
-            XLTaskHelper.instance(x.app().getApplicationContext()).stopTask(task.getTaskId());
+//            XLTaskHelper.instance(x.app().getApplicationContext()).stopTask(task.getTaskId());
         }
         return deleTask(task,deleFile);
     }
@@ -193,21 +199,21 @@ public class DownLoadModelImp implements DownLoadModel {
 
     @Override
     public List<TorrentInfoEntity> getTorrentInfo(String btpath) {
-        TorrentInfo torrentInfo= XLTaskHelper.instance(x.app().getApplicationContext()).getTorrentInfo(btpath);
+//        TorrentInfo torrentInfo= XLTaskHelper.instance(x.app().getApplicationContext()).getTorrentInfo(btpath);
         List<TorrentInfoEntity> list=new ArrayList<>();
-        for(TorrentFileInfo torrent:torrentInfo.mSubFileInfo){
-            TorrentInfoEntity tie=new TorrentInfoEntity();
-            tie.setHash(torrent.hash);
-            tie.setmFileIndex(torrent.mFileIndex);
-            tie.setmFileName(torrent.mFileName);
-            tie.setmFileSize(torrent.mFileSize);
-            tie.setmSubPath(torrent.mSubPath);
-            tie.setmRealIndex(torrent.mRealIndex);
-            tie.setPath(AppSettingUtil.getInstance().getFileSavePath()+
-                    File.separator+torrentInfo.mMultiFileBaseFolder+
-                    File.separator+torrent.mSubPath+File.separator+torrent.mFileName);
-            list.add(tie);
-        }
+//        for(TorrentFileInfo torrent:torrentInfo.mSubFileInfo){
+//            TorrentInfoEntity tie=new TorrentInfoEntity();
+//            tie.setHash(torrent.hash);
+//            tie.setmFileIndex(torrent.mFileIndex);
+//            tie.setmFileName(torrent.mFileName);
+//            tie.setmFileSize(torrent.mFileSize);
+//            tie.setmSubPath(torrent.mSubPath);
+//            tie.setmRealIndex(torrent.mRealIndex);
+//            tie.setPath(AppSettingUtil.getInstance().getFileSavePath()+
+//                    File.separator+torrentInfo.mMultiFileBaseFolder+
+//                    File.separator+torrent.mSubPath+File.separator+torrent.mFileName);
+//            list.add(tie);
+//        }
         return list;
     }
 }

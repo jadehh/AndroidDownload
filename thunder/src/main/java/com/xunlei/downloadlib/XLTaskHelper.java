@@ -4,6 +4,7 @@ import com.xunlei.downloadlib.parameter.BtIndexSet;
 import com.xunlei.downloadlib.parameter.BtSubTaskDetail;
 import com.xunlei.downloadlib.parameter.BtTaskParam;
 import com.xunlei.downloadlib.parameter.EmuleTaskParam;
+import com.xunlei.downloadlib.parameter.GetFileName;
 import com.xunlei.downloadlib.parameter.GetTaskId;
 import com.xunlei.downloadlib.parameter.MagnetTaskParam;
 import com.xunlei.downloadlib.parameter.P2spTaskParam;

@@ -2,16 +2,10 @@ package com.jadehh.androiddownload.ui.activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.Settings;
 import android.view.View;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
@@ -25,11 +19,9 @@ import com.jadehh.androiddownload.R;
 import com.jadehh.androiddownload.ui.base.BaseActivity;
 
 import com.cocosw.bottomsheet.BottomSheet;
-import com.jadehh.androiddownload.ui.common.Const;
+import com.jadehh.androiddownload.common.Const;
 import com.jadehh.androiddownload.utils.Util;
-
 import java.io.File;
-import java.util.ArrayList;
 
 @ContentView(R.layout.activity_main)
 public class MainActivity extends BaseActivity implements OnFilePickedListener  {
@@ -80,6 +72,14 @@ public class MainActivity extends BaseActivity implements OnFilePickedListener  
     private void searchClick(View view) {
         bottomSheetBuilder.show();
     }
+
+
+    @Event(value = R.id.down_manage)
+    private void downManageClick(View view) {
+        Intent intent =new Intent(MainActivity.this,DownloadManagementActivity.class);
+        startActivity(intent);
+    }
+
 
     @Override
     public void onFilePicked(@NonNull File file) {

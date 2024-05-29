@@ -1,7 +1,8 @@
 package com.jadehh.androiddownload.utils;
 
+import com.jadehh.androiddownload.R;
 import com.jadehh.androiddownload.mvp.e.DownloadTaskEntity;
-import com.jadehh.androiddownload.ui.common.Const;
+import com.jadehh.androiddownload.common.Const;
 
 import org.xutils.DbManager;
 import org.xutils.ex.DbException;

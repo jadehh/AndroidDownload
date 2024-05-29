@@ -1,12 +1,12 @@
 package com.jadehh.androiddownload.mvp.m;
 
+import com.jadehh.androiddownload.mvp.e.DownloadTaskEntity;
+import com.jadehh.androiddownload.common.Const;
+import com.jadehh.androiddownload.utils.DBTools;
+
 import org.xutils.ex.DbException;
 
 import java.util.List;
-
-import cn.sddman.download.common.Const;
-import cn.sddman.download.mvp.e.DownloadTaskEntity;
-import cn.sddman.download.util.DBTools;
 
 public class TaskModelImp implements TaskModel {
     @Override

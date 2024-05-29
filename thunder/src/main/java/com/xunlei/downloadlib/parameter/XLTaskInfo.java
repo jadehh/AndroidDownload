@@ -8,6 +8,8 @@ public class XLTaskInfo {
     public int mAdditionalResType;
     public long mAdditionalResVipRecvBytes;
     public long mAdditionalResVipSpeed;
+
+    public long mAdditionalResDCDNSpeed;
     public String mCid;
     public long mDownloadSize;
     public long mDownloadSpeed;

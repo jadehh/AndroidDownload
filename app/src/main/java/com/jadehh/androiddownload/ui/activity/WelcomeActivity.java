@@ -49,7 +49,7 @@ public class WelcomeActivity extends AppCompatActivity {
 
     public void initPermission() {
         PermissionX.init(this)
-                .permissions(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.CAMERA)
+                .permissions(Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.ACCESS_NETWORK_STATE, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.CAMERA,Manifest.permission.INTERNET)
                 .onExplainRequestReason((scope, deniedList) -> {
                     scope.showRequestReasonDialog(deniedList, "Core fundamental are based on these permissions", "OK", "Cancel");
                 })

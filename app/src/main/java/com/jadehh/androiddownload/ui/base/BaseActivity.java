@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.coorchice.library.SuperTextView;
 import com.jadehh.androiddownload.R;
-import com.jadehh.androiddownload.ui.common.AppManager;
+import com.jadehh.androiddownload.common.AppManager;
 
 import org.xutils.view.annotation.Event;
 import org.xutils.x;
