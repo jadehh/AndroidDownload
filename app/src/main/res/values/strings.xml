@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Android Download</string>
+    <string name="app_name">SD下载器</string>
     <string name="app_db_path">sddman/dowload/db</string>
     <string name="app_down_path">sddman/dowload/file</string>
     <string name="app_crash_path">sddman/dowload/crash</string>

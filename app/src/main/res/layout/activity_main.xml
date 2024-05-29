@@ -42,7 +42,7 @@
                 app:state_drawable_width="@dimen/top_nav_icon_height"
                 app:state_drawable_height="@dimen/top_nav_icon_height"
                 app:state_drawable="@drawable/ic_plus"
-                app:pressBgColor="@color/white_90"/>
+                app:pressBgColor="@color/whitesmoke"/>
             <com.coorchice.library.SuperTextView
                 android:id="@+id/down_manage"
                 android:layout_width="0dp"
@@ -59,7 +59,7 @@
                 app:state_drawable_width="@dimen/top_nav_icon_height"
                 app:state_drawable_height="@dimen/top_nav_icon_height"
                 app:state_drawable="@drawable/ic_download"
-                app:pressBgColor="@color/white_90"/>
+                app:pressBgColor="@color/whitesmoke"/>
             <com.coorchice.library.SuperTextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -75,7 +75,7 @@
                 app:state_drawable_width="@dimen/top_nav_icon_height"
                 app:state_drawable_height="@dimen/top_nav_icon_height"
                 app:state_drawable="@drawable/ic_download"
-                app:pressBgColor="@color/white_90"/>
+                app:pressBgColor="@color/whitesmoke"/>
             <com.coorchice.library.SuperTextView
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -91,7 +91,7 @@
                 app:state_drawable_width="@dimen/top_nav_icon_height"
                 app:state_drawable_height="@dimen/top_nav_icon_height"
                 app:state_drawable="@drawable/ic_download"
-                app:pressBgColor="@color/white_90"/>
+                app:pressBgColor="@color/whitesmoke"/>
 
         </LinearLayout>
 

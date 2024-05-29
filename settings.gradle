@@ -2,6 +2,7 @@ pluginManagement {
     repositories {
         gradlePluginPortal()
         mavenCentral()
+        jcenter()
         google()
     }
 }
@@ -24,3 +25,4 @@ dependencyResolutionManagement {
 }
 include ':app'
 rootProject.name = "AndroidDownload"
+include ':thunder'
