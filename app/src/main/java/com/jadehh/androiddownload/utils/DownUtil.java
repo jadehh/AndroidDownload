@@ -5,28 +5,27 @@ import com.jadehh.androiddownload.mvp.e.DownloadTaskEntity;
 import com.jadehh.androiddownload.common.Const;
 
 public class DownUtil {
-    private static DownUtil downUtil=null;
-    private static boolean isLoopDown=true;
-    public DownUtil(){
+    private static DownUtil downUtil = null;
+    private static boolean isLoopDown = true;
+
+    public DownUtil() {
 
     }
+
     public static synchronized DownUtil getInstance() {
-        if(downUtil==null){
-            downUtil=new DownUtil();
+        if (downUtil == null) {
+            downUtil = new DownUtil();
         }
         return downUtil;
     }
 
-    public static boolean isDownSuccess(DownloadTaskEntity task){
-        long fileSize=task.getFile()?task.getmFileSize():task.getmFileSize()-10000;
-        if (task.getmTaskStatus() == Const.DOWNLOAD_SUCCESS ||
-                (task.getmFileSize()>0 && task.getmDownloadSize()>0 && fileSize<=task.getmDownloadSize())) {
-            return  true;
-        }
-        return false;
+    public static boolean isDownSuccess(DownloadTaskEntity task) {
+        long fileSize = task.getFile() ? task.getmFileSize() : task.getmFileSize() - 10000;
+        return task.getmTaskStatus() == Const.DOWNLOAD_SUCCESS ||
+                (task.getmFileSize() > 0 && task.getmDownloadSize() > 0 && fileSize <= task.getmDownloadSize());
     }
 
-    public  boolean isIsLoopDown() {
+    public boolean isIsLoopDown() {
         return isLoopDown;
     }
 

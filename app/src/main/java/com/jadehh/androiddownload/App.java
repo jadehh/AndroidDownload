@@ -6,6 +6,10 @@ import android.util.Log;
 
 
 import com.jadehh.androiddownload.common.DelegateApplicationPackageManager;
+import com.orhanobut.logger.AndroidLogAdapter;
+import com.orhanobut.logger.LogAdapter;
+import com.orhanobut.logger.Logger;
+import com.orhanobut.logger.PrettyFormatStrategy;
 import com.xunlei.downloadlib.utils.Init;
 
 import org.xutils.x;
@@ -16,6 +20,7 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        Logger.addLogAdapter(getLogAdapter());
         x.Ext.init(this);
         Init.set(this);
         //x.Ext.setDebug(BuildConfig.DEBUG);
@@ -38,4 +43,13 @@ public class App extends Application {
         }
         return super.getPackageManager();
     }
+    private LogAdapter getLogAdapter() {
+        return new AndroidLogAdapter(PrettyFormatStrategy.newBuilder().methodCount(0).showThreadInfo(false).tag("").build()) {
+            @Override
+            public boolean isLoggable(int priority, String tag) {
+                return true;
+            }
+        };
+    }
+
 }

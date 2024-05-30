@@ -1,5 +1,7 @@
 package com.jadehh.androiddownload.mvp.m;
 
+import android.os.SystemClock;
+
 import com.jadehh.androiddownload.mvp.e.DownloadTaskEntity;
 import com.jadehh.androiddownload.mvp.e.TorrentInfoEntity;
 import com.jadehh.androiddownload.common.Const;
@@ -22,6 +24,8 @@ import java.util.List;
 
 
 public class DownLoadModelImp implements DownLoadModel {
+
+    private int time = 0;
     public DownLoadModelImp(){
 
     }
@@ -46,6 +50,12 @@ public class DownLoadModelImp implements DownLoadModel {
         return startTorrentTask(path,indexs);
     }
 
+    private void sleep() {
+        SystemClock.sleep(10);
+        time += 10;
+    }
+
+
     @Override
     public Boolean startUrlTask(String url) {
         DownloadTaskEntity task=new DownloadTaskEntity();
@@ -53,9 +63,8 @@ public class DownLoadModelImp implements DownLoadModel {
         task.setUrl(url);
         task.setLocalPath(AppSettingUtil.getInstance().getFileSavePath());
         try {
-            XLTaskHelper xlTaskHelper = new XLTaskHelper();
-            GetTaskId getTaskId = xlTaskHelper.addThunderTask(url, new File(AppSettingUtil.getInstance().getFileSavePath()));
-            XLTaskInfo taskInfo = xlTaskHelper.getTaskInfo(getTaskId);
+            GetTaskId getTaskId = XLTaskHelper.get().addThunderTask(url, new File(AppSettingUtil.getInstance().getFileSavePath()));
+            XLTaskInfo taskInfo = XLTaskHelper.get().getDwonloadTaskInfo(getTaskId.mTaskId);
             task.setmFileName(getTaskId.getFileName());
             task.setmFileSize(taskInfo.mFileSize);
             task.setmTaskStatus(taskInfo.mTaskStatus);
@@ -136,7 +145,7 @@ public class DownLoadModelImp implements DownLoadModel {
             }else if(task.getTaskType()==Const.URL_DOWNLOAD){
                 taskId = XLTaskHelper.get().addThunderTask(task.getUrl(),new File(task.getLocalPath()));
             }
-            XLTaskInfo taskInfo  = XLTaskHelper.get().getTaskInfo(taskId);
+            XLTaskInfo taskInfo  = XLTaskHelper.get().getDwonloadTaskInfo(taskId.mTaskId);
             task.setmFileSize(taskInfo.mFileSize);
             task.setTaskId(taskInfo.mTaskId);
             task.setmTaskStatus(taskInfo.mTaskStatus);

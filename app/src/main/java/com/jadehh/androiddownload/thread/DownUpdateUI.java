@@ -20,6 +20,7 @@ import com.jadehh.androiddownload.utils.FileTools;
 import com.jadehh.androiddownload.utils.SystemConfig;
 import com.jadehh.androiddownload.view.DownProgressNotify;
 import com.xunlei.downloadlib.XLTaskHelper;
+import com.xunlei.downloadlib.parameter.GetTaskId;
 import com.xunlei.downloadlib.parameter.XLTaskInfo;
 
 import org.xutils.x;
@@ -78,8 +79,7 @@ public class DownUpdateUI {
                         }
                     }
                     if (task.getmTaskStatus() != Const.DOWNLOAD_STOP && task.getmTaskStatus() != Const.DOWNLOAD_WAIT  && task.getTaskId()!=0) {
-//                        XLTaskHelper
-                        XLTaskInfo taskInfo = new XLTaskInfo();
+                        XLTaskInfo taskInfo = XLTaskHelper.get().getDwonloadTaskInfo(task.getTaskId());
                         task.setTaskId(taskInfo.mTaskId);
                         task.setmTaskStatus(taskInfo.mTaskStatus);
                         task.setmDCDNSpeed(taskInfo.mAdditionalResDCDNSpeed);
